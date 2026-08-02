@@ -1,45 +1,56 @@
 # Homelab V2
 
-## Overview
+A complete redesign of my self-hosted homelab built around simplicity, reliability and Infrastructure as Code.
 
-Homelab V2 is a complete redesign of my existing Linux homelab.
+Rather than upgrading an existing installation, Homelab V2 is being rebuilt from the ground up using a clean architecture, modular Docker stacks and a documented design process.
 
-Instead of migrating the current setup, this project focuses on rebuilding the homelab from scratch using a clean architecture, improved storage layout, and a modular Docker-based design.
-
-The primary goal is to create a reliable, low-maintenance home server that can run 24/7 while remaining easy to understand, maintain, and migrate to future hardware.
+The goal is to build a lightweight, maintainable and easily recoverable home server that can evolve with future hardware.
 
 ---
 
-## Project Goals
+# Project Status
+
+| Property | Value |
+|----------|-------|
+| Version | v2.0.0-alpha |
+| Status | 🟡 Architecture Complete |
+| Current Phase | Infrastructure Bootstrap |
+| Next Milestone | Debian Installation |
+
+---
+
+# Objectives
 
 - Stable 24/7 operation
-- Lightweight operating system
+- Lightweight and reliable operating system
 - Docker-first architecture
-- Organized storage layout
-- Simple maintenance
-- Easy disaster recovery
+- Modular service deployment
+- Clean storage organization
+- Infrastructure as Code
+- Fast disaster recovery
 - Easy migration to future hardware
-- Clear documentation of design decisions
+- Well-documented design decisions
 
 ---
 
-## Current Hardware
+# Hardware
 
 | Component | Specification |
 |-----------|---------------|
 | Laptop | Lenovo G50-45 |
 | CPU | AMD A8-6410 (4 Cores) |
 | Memory | 8 GB DDR3 |
-| Storage | 500 GB SSD + 1 TB HDD |
+| Primary Storage | 500 GB SSD |
+| Secondary Storage | 1 TB HDD |
 | Graphics | AMD Radeon R5 + Radeon R5 M230 |
 
-Detailed hardware information is available in **HARDWARE.md**.
+Detailed hardware specifications are available in **docs/HARDWARE.md**.
 
 ---
 
-## Planned Services
+# Planned Service Architecture
 
-### Infrastructure
+## Infrastructure
 
 - Docker Engine
 - Dockge
@@ -47,7 +58,7 @@ Detailed hardware information is available in **HARDWARE.md**.
 - Tailscale
 - NoMachine
 
-### Media
+## Media
 
 - Jellyfin
 - Navidrome
@@ -57,98 +68,132 @@ Detailed hardware information is available in **HARDWARE.md**.
 - Prowlarr
 - qBittorrent
 
-### Storage
+## Storage
 
 - Nextcloud
 
-### Smart Home
+## Smart Home
 
 - Home Assistant
 - Matter Server
 
-### Monitoring
+## Monitoring
 
 - Uptime Kuma
 - Lightweight System Monitoring
+- Notifications
 
 ---
 
-## Storage Philosophy
+# Storage Architecture
 
-SSD
+## SSD (500 GB)
 
-- Operating System
-- Docker
-- Downloads
-- Container Configurations
+- Debian Operating System
+- Docker Engine
+- Docker AppData
+- Active Downloads
+- Infrastructure
 
-HDD
+## HDD (1 TB)
 
 - Movies
 - TV Shows
 - Music
-- Photos
-- Backups
+- Personal Files
+- Infrastructure Backups
 
-Downloads will be stored on the SSD for maximum performance before being automatically moved to the HDD media library.
+Downloads are stored on the SSD for performance and automatically moved to the HDD after processing.
 
 ---
 
-## Design Philosophy
+# Architecture Principles
 
-This project follows a few core principles.
+Homelab V2 follows several core principles.
 
 - Design before implementation.
-- Document decisions instead of commands.
+- Infrastructure as Code.
+- Containers never own user data.
+- Services are grouped into independent Docker stacks.
+- Only irreplaceable data is backed up.
+- The operating system is disposable.
 - Keep the system simple.
-- Prefer reliability over bleeding-edge software.
-- Build for easy migration to future hardware.
+- Build for future migration.
 
 ---
 
-## Project Status
+# Documentation
 
-Current Phase:
+| Document | Purpose |
+|----------|---------|
+| docs/HARDWARE.md | Hardware inventory |
+| docs/DECISIONS.md | Architecture Decision Records |
+| docs/ARCHITECTURE.md | System architecture and diagrams |
+| BUILD.md | Build and deployment plan |
 
-> Planning & Architecture
+---
 
-Completed
+# Repository Structure
+
+```text
+homelab-V2/
+
+├── README.md
+├── BUILD.md
+├── docs/
+├── compose/
+├── scripts/
+├── bootstrap/
+├── templates/
+├── diagrams/
+└── .github/
+```
+
+---
+
+# Roadmap
+
+## ✅ Completed
 
 - Hardware Audit
-- Requirements Gathering
-- Operating System Research
-- Initial Project Setup
-
-Upcoming
-
+- Requirements Analysis
+- Operating System Selection
 - Storage Architecture
 - Docker Architecture
 - Backup Strategy
-- Fresh Installation
-- Service Deployment
+- Infrastructure as Code
+- Build Planning
+- Repository Structure
+
+## 🚧 In Progress
+
+- Infrastructure Bootstrap
+
+## 📋 Upcoming
+
+- Debian Installation
+- Base System Configuration
+- Docker Platform
+- Infrastructure Stack
+- Media Stack
+- Storage Stack
+- Smart Home Stack
+- Monitoring Stack
+- Backup Validation
+- Production Release (v2.0.0)
 
 ---
 
-## Repository Structure
+# Design Philosophy
 
-This repository will contain
+Homelab V2 is not just a server.
 
-README.md
+It is an engineering project where every architectural decision is documented, version-controlled and reproducible.
 
-HARDWARE.md
-
-DECISIONS.md
-
-Docker Compose files
-
-Scripts
-
-Architecture diagrams
-
-Configuration examples
+The GitHub repository is the source of truth, while the running server is considered a deployed instance of that repository.
 
 ---
 
-## License
+# License
 
-This project is maintained as a personal homelab project and learning resource.
+This repository is maintained as a personal homelab project, learning resource and long-term infrastructure blueprint.
