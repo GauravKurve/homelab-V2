@@ -46,7 +46,7 @@ Documentation should remain concise and useful instead of becoming a step-by-ste
 
 Debian 13 with Xfce Desktop
 
-**Status:** Selected (Subject to final validation before installation)
+**Status:** Status: Preferred (Final validation during installation)
 
 ## Requirements
 
@@ -184,12 +184,166 @@ Power management will therefore prioritize reliability over aggressive sleep or 
 
 ---
 
-# Pending Decisions
+---
 
-The following topics remain under active design.
+# Decision 009 - Storage & Directory Architecture
 
-- Filesystem layout
-- Directory structure
+## Decision
+
+The storage layout will be designed around the role of each drive rather than treating all storage equally.
+
+### SSD (Performance Tier)
+
+The SSD will be dedicated to active workloads.
+
+```
+/
+└── opt
+    └── docker
+        ├── compose
+        ├── appdata
+        ├── scripts
+        └── backups
+
+/srv
+└── downloads
+    ├── incomplete
+    ├── complete
+    ├── watch
+    └── manual
+```
+
+Primary responsibilities
+
+- Operating System
+- Docker Engine
+- Docker Compose files
+- Container configuration
+- Downloads
+- Temporary working data
+
+---
+
+### HDD (Storage Tier)
+
+The HDD will be dedicated to long-term storage.
+
+```
+/srv
+├── media
+│   ├── Movies
+│   ├── TV
+│   ├── Music
+│   ├── Photos
+│   └── Documents
+│
+└── backup
+    ├── Docker
+    ├── Compose
+    ├── Configurations
+    ├── Databases
+    └── Nextcloud
+```
+
+Primary responsibilities
+
+- Media Library
+- Backups
+- Long-term file storage
+
+---
+
+## Storage Workflow
+
+```
+Internet
+    │
+    ▼
+qBittorrent
+    │
+    ▼
+SSD Downloads
+    │
+    ▼
+Sonarr / Radarr / Lidarr
+    │
+    ▼
+Rename & Organize
+    │
+    ▼
+HDD Media Library
+    │
+    ▼
+Jellyfin Library Scan
+```
+
+---
+
+## Design Principles
+
+### Separate Applications from Data
+
+Application files and user data must never be mixed.
+
+Container configurations remain inside `/opt/docker/appdata`, while user-generated files remain under `/srv`.
+
+---
+
+### Predictable Layout
+
+Every service should have an obvious location.
+
+Examples
+
+| Item | Location |
+|-------|----------|
+| Docker Compose | `/opt/docker/compose` |
+| Container Configurations | `/opt/docker/appdata` |
+| Downloads | `/srv/downloads` |
+| Movies | `/srv/media/Movies` |
+| TV Shows | `/srv/media/TV` |
+| Music | `/srv/media/Music` |
+| Backups | `/srv/backup` |
+
+---
+
+### Future Migration
+
+The architecture is intentionally hardware-independent.
+
+Migrating to future hardware should only require:
+
+1. Install the operating system.
+2. Install Docker.
+3. Restore `/opt/docker`.
+4. Restore `/srv`.
+5. Start the Docker Compose stack.
+
+---
+
+## Reason
+
+The previous homelab evolved organically, resulting in configuration files, downloads and application data being distributed across multiple locations.
+
+Homelab V2 adopts a predictable, Linux-standard directory structure that improves maintainability, simplifies backups and significantly reduces migration effort.
+
+The design also aligns with the different strengths of the available storage devices by using the SSD for performance-sensitive workloads and the HDD for long-term storage.
+
+# Project Decision Status
+
+## Completed
+
+- Project philosophy
+- Documentation strategy
+- Operating system selection
+- Display server
+- Container platform
+- Storage philosophy
+- Server philosophy
+- Storage & directory architecture
+
+## Pending
+
 - Docker architecture
 - Backup strategy
 - Monitoring stack
