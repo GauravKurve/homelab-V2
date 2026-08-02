@@ -329,23 +329,220 @@ Homelab V2 adopts a predictable, Linux-standard directory structure that improve
 
 The design also aligns with the different strengths of the available storage devices by using the SSD for performance-sensitive workloads and the HDD for long-term storage.
 
+---
+
+# Decision 010 - Docker Architecture
+
+## Decision
+
+Homelab V2 will follow a modular Docker architecture.
+
+Services are grouped into independent stacks rather than maintaining one large Docker Compose file.
+
+Each stack contains its own Compose file, environment file and documentation.
+
+Example structure:
+
+/opt/docker/stacks/
+
+- infrastructure/
+- media/
+- smart-home/
+- storage/
+- monitoring/
+
+Each stack contains:
+
+- compose.yaml
+- .env
+- README.md
+
+---
+
+## Design Principles
+
+- One logical Compose file per stack.
+- One configuration directory per application.
+- Shared data remains outside containers.
+- Containers are replaceable.
+- User data is independent of applications.
+
+---
+
+## Reason
+
+Grouping services by function improves maintainability, simplifies troubleshooting and allows individual stacks to be deployed, upgraded or migrated independently.
+
+The architecture also scales naturally as additional services are introduced.
+
+---
+
+# Decision 011 - Backup & Disaster Recovery
+
+## Decision
+
+Homelab V2 follows a tiered backup strategy based on the value and recoverability of data.
+
+### Tier 0
+
+Operating System
+
+The operating system is considered disposable.
+
+Recovery is achieved through a fresh installation followed by infrastructure restoration.
+
+---
+
+### Tier 1
+
+Infrastructure
+
+Includes:
+
+- Docker Compose files
+- Container configurations
+- Homepage
+- Home Assistant configuration
+- Scripts
+- Environment templates
+
+Daily backup.
+
+Retain the two most recent versions.
+
+---
+
+### Tier 2
+
+Personal Data
+
+Includes:
+
+- Nextcloud files
+- Personal documents
+- Photos
+
+Protected independently and intended for future expansion to a NAS.
+
+---
+
+### Tier 3
+
+Reproducible Media
+
+Includes:
+
+- Movies
+- TV Shows
+- Music
+
+No backup is maintained.
+
+Media can be downloaded again if required.
+
+---
+
+## Recovery Goals
+
+- Docker container failure: Restore in minutes.
+- SSD failure: Restore infrastructure within one hour.
+- HDD failure: Replace storage and rebuild media library.
+- Operating system failure: Fresh installation followed by infrastructure restoration.
+
+---
+
+## Reason
+
+Backup resources should be focused on data that is expensive or impossible to recreate.
+
+Media libraries are replaceable, whereas infrastructure configuration is not.
+
+---
+
+# Decision 012 - Infrastructure as Code
+
+## Decision
+
+The GitHub repository is the primary source of truth for Homelab V2.
+
+The running server is considered a deployed instance of the repository.
+
+---
+
+## Repository Responsibilities
+
+The repository contains:
+
+- Documentation
+- Docker Compose files
+- Bootstrap scripts
+- Homepage configuration
+- Templates
+- Automation scripts
+
+The repository does not contain:
+
+- Media
+- Downloads
+- Databases
+- Personal files
+- Docker volumes
+
+---
+
+## Update Strategy
+
+The repository is updated whenever infrastructure changes occur.
+
+Examples include:
+
+- New services
+- Configuration changes
+- Compose updates
+- Homepage modifications
+- Architectural decisions
+
+Routine scheduled commits are intentionally avoided.
+
+---
+
+## Disaster Recovery
+
+Recovery procedure:
+
+1. Install Debian.
+2. Clone the repository.
+3. Run bootstrap automation.
+4. Restore infrastructure backup.
+5. Start Docker stacks.
+
+---
+
+## Reason
+
+Treating infrastructure as code ensures every configuration change is version controlled, documented and reproducible.
+
+The repository becomes both documentation and the deployment blueprint for future hardware.
+
 # Project Decision Status
 
 ## Completed
 
 - Project philosophy
 - Documentation strategy
-- Operating system selection
-- Display server
-- Container platform
+- Operating system (Preferred: Debian 13 + Xfce)
+- Display server (X11)
+- Container platform (Docker Engine)
 - Storage philosophy
 - Server philosophy
 - Storage & directory architecture
+- Docker architecture
+- Backup & disaster recovery
+- Infrastructure as Code (GitHub-first)
 
 ## Pending
 
-- Docker architecture
-- Backup strategy
-- Monitoring stack
-- Notification system
 - Network architecture
+- Monitoring & alerting
+- Installation blueprint
+- Bootstrap automation
