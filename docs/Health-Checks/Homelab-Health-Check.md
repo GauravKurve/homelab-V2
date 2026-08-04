@@ -254,3 +254,155 @@ Phase 3 approved.
 
 Proceed to:
 PHASE 4 - MEDIA STACK VALIDATION.
+============================================================
+PHASE 4 - MEDIA STACK VALIDATION
+================================
+
+Status:
+✅ PASSED
+
+Objective:
+Validate the operational health of all media services, verify media library configuration, confirm hardware acceleration availability, and ensure media storage remains accessible after the Jellyfin migration.
+
+---
+
+## Checks Performed
+
+Media Services
+✓ Jellyfin
+✓ Sonarr
+✓ Radarr
+✓ Bazarr
+✓ Prowlarr
+✓ Lidarr
+✓ qBittorrent
+✓ Navidrome
+
+Service Availability
+✓ All services responding over HTTP
+✓ No unhealthy containers
+✓ No service startup failures
+
+Jellyfin
+✓ Database verified
+✓ Configuration verified
+✓ Hardware acceleration devices detected
+✓ Media library accessible
+
+Media Library
+✓ Movies root folder verified
+✓ Series root folder verified
+✓ Music root folder verified
+✓ Media directory permissions verified
+
+Application Logs
+✓ No critical service failures detected
+✓ No database corruption detected
+✓ No filesystem permission errors detected
+
+---
+
+## Observations
+
+• Hardware acceleration devices are successfully available inside the Jellyfin container.
+• Media root folders remain correctly configured after the migration.
+• All media services are operational and responding normally.
+• Media directory permissions are consistent.
+• Minor informational log messages were observed (metadata refreshes, RSS synchronization, temporary indexer rate limiting) but no operational issues were identified.
+
+---
+
+## Issues Found
+
+None requiring corrective action.
+
+---
+
+## Actions Taken
+
+✓ Verified service availability.
+✓ Verified HTTP responsiveness.
+✓ Verified media library accessibility.
+✓ Verified Jellyfin hardware acceleration.
+✓ Verified root folder configuration.
+✓ Reviewed application logs.
+
+---
+
+## Decision
+
+Phase 4 approved.
+
+Proceed to:
+PHASE 5 - SERVICE INTEGRATION VALIDATION.
+============================================================
+PHASE 5 - SERVICE INTEGRATION VALIDATION
+========================================
+
+Status:
+✅ PASSED
+
+Objective:
+Verify that the media ecosystem is functioning as an integrated platform and that core service APIs and storage paths remain operational.
+
+---
+
+## Checks Performed
+
+Docker Networking
+✓ Docker networks verified
+✓ Container networking operational
+
+Application APIs
+✓ Jellyfin Public API verified
+✓ Netdata API verified
+✓ Homepage service reachable
+
+Media Integration
+✓ Jellyfin database accessible
+✓ Media library available
+✓ Movies directory verified
+✓ Series directory verified
+✓ Music directory verified
+✓ Downloads directory verified
+
+Media Configuration
+✓ Sonarr root folder verified
+✓ Radarr root folder verified
+✓ Lidarr root folder verified
+
+---
+
+## Observations
+
+• Jellyfin database contains the expected media records following migration.
+• Netdata reports no warning or critical system alarms.
+• Media libraries remain accessible to all services.
+• Docker networking is operating normally.
+• Application APIs are responding correctly.
+
+---
+
+## Issues Found
+
+None.
+
+---
+
+## Actions Taken
+
+✓ Verified Docker networking.
+✓ Verified application API responses.
+✓ Verified Jellyfin database accessibility.
+✓ Verified media directory accessibility.
+✓ Verified root folder configuration.
+✓ Verified monitoring service health.
+
+---
+
+## Decision
+
+Phase 5 approved.
+
+Proceed to:
+PHASE 6 - NETWORK & REMOTE ACCESS VALIDATION.
