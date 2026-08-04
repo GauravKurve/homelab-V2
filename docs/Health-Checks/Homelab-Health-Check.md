@@ -165,3 +165,92 @@ Phase 2 approved.
 
 Proceed to:
 PHASE 3 - STORAGE VALIDATION.
+============================================================
+PHASE 3 - STORAGE VALIDATION
+============================
+
+Status:
+✅ PASSED
+
+Objective:
+Validate the storage layout, filesystem health, media directories, Docker bind mounts, and cache locations to ensure a reliable foundation for all homelab services.
+
+---
+
+## Checks Performed
+
+Filesystem Health
+✓ Root filesystem verified
+✓ Home filesystem verified
+✓ EFI partition verified
+✓ Mount points validated
+✓ Filesystem types verified
+
+Storage Devices
+✓ HDD detected and operating normally
+✓ SSD detected and available for future migration
+✓ Disk usage reviewed
+
+Homelab Directory Structure
+✓ Cache directory verified
+✓ Compose directory verified
+✓ Data directory verified
+✓ Service configuration directories verified
+
+Media Library
+✓ Movies library verified
+✓ Series library verified
+✓ Music library verified
+✓ Downloads directory verified
+
+Docker Storage
+✓ Docker bind mounts validated
+✓ Jellyfin configuration directory verified
+✓ Jellyfin cache separation verified
+✓ Service configuration directories verified
+
+---
+
+## Observations
+
+• Homelab directory structure is clean and well organized.
+• Jellyfin cache has been successfully separated from configuration data.
+• Media library layout is consistent across services.
+• All required bind-mounted host paths exist and are accessible.
+• SSD is connected and ready for the planned operating system migration.
+
+---
+
+## Notes
+
+• The `jellyfin.docker-backup` directory is intentionally retained until the SSD migration has been completed and verified.
+
+• Jellyfin currently exposes the media library through both `/home/gaurav/media` and `/media`. This is a temporary compatibility configuration and will be simplified during the SSD migration project.
+
+• FlareSolverr and qBittorrent currently use Docker-managed named volumes for their configuration. These are operating normally and are outside the scope of this storage validation.
+
+---
+
+## Issues Found
+
+None.
+
+---
+
+## Actions Taken
+
+✓ Verified filesystem health.
+✓ Verified storage layout.
+✓ Verified Docker bind mounts.
+✓ Verified media directory structure.
+✓ Verified Jellyfin cache separation.
+✓ Verified SSD detection for future migration.
+
+---
+
+## Decision
+
+Phase 3 approved.
+
+Proceed to:
+PHASE 4 - MEDIA STACK VALIDATION.
